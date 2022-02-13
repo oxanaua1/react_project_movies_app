@@ -1,0 +1,25 @@
+* {
+    margin: 0 auto;
+    padding: 0;
+}
+
+
+.Header {
+    min-height: 70px;
+    background-color: navy;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    column-gap: 150px;
+}
+
+.Header a {
+    font-size: 30px;
+    color: snow;
+    text-decoration: none;
+}
+
+.Header a[class='active'] {
+    color: cornflowerblue;
+}
+

@@ -1,0 +1,30 @@
+.MovieCardWrapper {
+    width: 300px;
+    background-color: #132673;
+    align-items: center;
+
+}
+
+.Title {
+    color: aliceblue;
+    padding: 0 0 5px 10px;
+}
+
+.Vote {
+    color: aliceblue;
+    padding-left: 20px;
+}
+
+.MovieCardWrapper button {
+    background-color: gray;
+    height: 30px;
+    border-radius: 5px;
+
+
+}
+
+.MovieCardWrapper a {
+    text-decoration: none;
+    color: darkblue;
+    padding: 5px;
+}
