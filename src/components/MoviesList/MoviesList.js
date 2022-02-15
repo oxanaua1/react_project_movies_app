@@ -1,47 +1,57 @@
 import React, {useEffect} from "react";
 import {useDispatch, useSelector} from "react-redux";
 
-import {getAllMovies, nextPage} from "../../store";
+import {getAllMovies} from "../../store";
 import {MoviesListCard} from "../MoviesListCard/MoviesListCard";
 import css from "./MovieList.module.css"
+import {useParams, useSearchParams} from "react-router-dom";
 
 
 const MoviesList = () => {
 
-    const {movies, status, error, startPage} = useSelector(state => state.movies);
+    const {movies, status, error, currentPage, page} = useSelector(state => state.movies);
     const dispatch = useDispatch();
     const pages = [1, 2, 3, 4, 5];
+    const [searchParams, setSearchParams] = useSearchParams();
 
+
+    const setCurrentPage = (page) => {
+  // if (searchParams){}
+    return   currentPage === page
+
+
+    }
 
     useEffect(() => {
+        if (!searchParams.get('page')) {
+            setSearchParams({page: '1'})
+        }
+        const page = searchParams.get('page');
 
-        dispatch(getAllMovies({startPage}))
+        dispatch(getAllMovies({currentPage}))
 
-    }, [startPage])
+    }, [searchParams])
 
-    // const nextPage = (startPage) => {
-    //     if (!startPage) {
-    //         return ++startPage
-    //     }
-    // }
+
 
     return (
         <div>
-            {/*className={css.CurrentPage===startPage ? 'CurrentPage':'page'}*/}
+
 
             {status}
-            <div className={css.Pages}>{pages.map((page, index) =>
-                <span key={index} className={css.Page}> {page}</span>)}</div>
+
+            <div className={css.Pages}>
+                {/*<div className={currentPage === page ? css.CurrentPage : css.Page}> </div>*/}
+                {pages.map((page, index) =>
+                    <span key={index} className={css.Page}
+                          onClick={() => setCurrentPage(page)}
+                    > {page}</span>)}
+            </div>
+
 
             <div className={css.MovieListWrapper}>
                 {movies.map(movie => <MoviesListCard key={movie.id} movie={movie}/>)}
             </div>
-            {/*<button onClick={({pageNumber})=>{*/}
-            {/*    --pageNumber*/}
-            {/*}}>prev</button>*/}
-            {/*<button onClick={()=>{*/}
-            {/*    */}
-            {/*}}>next</button>*/}
 
             {error}
 

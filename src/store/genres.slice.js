@@ -25,14 +25,9 @@ export const getAllGenres = createAsyncThunk(
 
 export const getMoviesByGenreId = createAsyncThunk(
     'genresSlice/getMovieByGenreId',
-    async ({genre_ids}, {
-        rejectedWithValue, dispatch
-    }) => {
+    async ({genre_ids}, {rejectedWithValue}) => {
         try {
-          return   await genresService.getGenreById({genre_ids})
-            // dispatch(filteredGenre({genre_ids}))
-
-
+            return await genresService.getGenreById({genre_ids})
         } catch (e) {
             return rejectedWithValue(e.response.data)
         }
@@ -43,13 +38,7 @@ export const getMoviesByGenreId = createAsyncThunk(
 const genresSlice = createSlice({
     name: 'genresSlice',
     initialState,
-    reducers: {
-        // filteredGenre: (state, action) => {
-        //     state.moviesByGenre = state.moviesByGenre.filter(moviesByGenre => moviesByGenre.genre_ids === action.payload.genre_ids.id)
-        //
-        //     console.log(state.moviesByGenre)
-        // }
-    },
+    reducers: {},
     extraReducers: {
         [getAllGenres.pending]: (state) => {
             state.status = 'pending'
@@ -77,6 +66,5 @@ const genresSlice = createSlice({
 
 
 const genresReducer = genresSlice.reducer;
-export const {filteredGenre} = genresSlice.actions;
 export default genresReducer;
 

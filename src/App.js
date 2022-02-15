@@ -16,7 +16,7 @@ function App() {
                     <Route path={'movies/:id'} element={<MovieInfo/>}/>
 
                     <Route path={'genres'} element={<GenreBadge/>}>
-                        <Route path={':genre_ids/movies'} element={<MovieInfo/>}/>
+                        <Route path={':genre_ids/movies'} element={<GenreBadge/>}/>
                     </Route>
 
                 </Route>

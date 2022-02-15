@@ -14,8 +14,6 @@ const GenreBadge = () => {
     const {genres, moviesByGenre, status, error} = useSelector(state => state.genres);
     const dispatch = useDispatch();
 
-    // console.log(genre_ids)
-    console.log(moviesByGenre)
 
     useEffect(() => {
 
@@ -24,16 +22,14 @@ const GenreBadge = () => {
     }, []);
 
     useEffect(() => {
+        if (genre_ids){
+            dispatch(getMoviesByGenreId({genre_ids}))
+        }
 
-
-        dispatch(getMoviesByGenreId({genre_ids}))
-
-
+        console.log(moviesByGenre)
 
     }, [genre_ids]);
 
-    // genre_ids => genre_ids.map(value => value.id)
-    //genre_ids => genre_ids.filter(value => value.id === genre_ids.id)
 
     return (
         <div>
@@ -44,11 +40,15 @@ const GenreBadge = () => {
             </div>
 
             <div>
+                {/*{moviesByGenre.filter(movieByGenre => movieByGenre.genre_ids.id === genre_ids)}*/}
+
                 {moviesByGenre.map(movieByGenre => <MovieGenre key={movieByGenre.id} movieByGenre={movieByGenre}/>)}
+
+
             </div>
 
-
             {error}
+
 
         </div>
     );

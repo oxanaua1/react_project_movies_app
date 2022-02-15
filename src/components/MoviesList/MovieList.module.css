@@ -13,13 +13,14 @@
 }
 
 .Page {
-    border: 1px solid cornflowerblue;
-    border-radius: 50%;
+    border: 1px solid azure;
     padding: 10px;
     margin: 10px;
     cursor: pointer;
     background-color: aliceblue;
 }
-.CurrentPage {
-    background-color: coral;
-}
+
+/*.CurrentPage {*/
+/*    !*border: 2px solid grey;*!*/
+/*    background-color: coral;*/
+/*}*/

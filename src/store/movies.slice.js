@@ -8,35 +8,29 @@ const initialState = {
     status: null,
     error: null,
     movie: null,
-    startPage: 1,
+    currentPage: 1,
     page: null,
-    total_pages: 0,
+    // total_pages: 0,
 
 
 }
 export const getAllMovies = createAsyncThunk(
     'moviesSlice/getAllMovies',
-    async ({startPage}, {rejectedWithValue, dispatch}) => {
+    async ({currentPage}, {rejectedWithValue}) => {
         try {
-           return  await moviesService.getAll({startPage})
-            // dispatch(nextPage({startPage}))
+            return await moviesService.getAll(currentPage)
         } catch (e) {
             return rejectedWithValue(e.response.data)
         }
     }
 );
-export const nextPage = (startPage) => {
-  if (!startPage){
-   return   ++startPage
-  }
-}
+
 
 export const getMovieById = createAsyncThunk(
     'moviesSlice/getMovieById',
     async ({id}, {rejectedWithValue}) => {
         try {
             return await moviesService.getById({id})
-
 
         } catch (e) {
             return rejectedWithValue(e.response.data)
@@ -47,9 +41,7 @@ export const getMovieById = createAsyncThunk(
 const moviesSlice = createSlice({
     name: 'moviesSlice',
     initialState,
-    reducers: {
-
-    },
+    reducers: {},
     extraReducers: {
         [getAllMovies.pending]: (state) => {
             state.status = 'pending'
@@ -57,6 +49,9 @@ const moviesSlice = createSlice({
         [getAllMovies.fulfilled]: (state, action) => {
             state.status = 'fulfilled'
             state.movies = action.payload
+            state.currentPage = action.payload.currentPage
+            state.page = action.payload.page
+            // state.total_pages = action.payload.total_pages
         },
         [getAllMovies.rejected]: (state, action) => {
             state.error = action.payload
@@ -68,10 +63,6 @@ const moviesSlice = createSlice({
         [getMovieById.fulfilled]: (state, action) => {
             state.status = 'fulfilled!'
             state.movie = action.payload
-            state.startPage = action.payload.startPage
-            state.page=action.payload.page
-            state.total_pages = action.payload.total_pages
-
 
         },
         [getMovieById.rejected]: (state, action) => {
@@ -83,5 +74,5 @@ const moviesSlice = createSlice({
 
 
 const moviesReducer = moviesSlice.reducer;
-// export const {nextPage} = moviesSlice.actions;
+
 export default moviesReducer;
