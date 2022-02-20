@@ -8,17 +8,19 @@ const initialState = {
     status: null,
     error: null,
     movie: null,
-    currentPage: 1,
-    page: null,
-    // total_pages: 0,
+    page: 1,
+    currentPage: null,
+    totalPages: [],
 
 
 }
 export const getAllMovies = createAsyncThunk(
     'moviesSlice/getAllMovies',
-    async ({currentPage}, {rejectedWithValue}) => {
+    async ({page}, {rejectedWithValue}) => {
         try {
-            return await moviesService.getAll(currentPage)
+            return await moviesService.getAll({page})
+
+
         } catch (e) {
             return rejectedWithValue(e.response.data)
         }
@@ -41,7 +43,16 @@ export const getMovieById = createAsyncThunk(
 const moviesSlice = createSlice({
     name: 'moviesSlice',
     initialState,
-    reducers: {},
+    reducers: {
+        setCurrentPage: ((state, action) => {
+                state.page = action.payload.page;
+            }
+        ),
+        // setTotalPages:((state, action) => {
+        //     state.totalPages.forEach(page=>page)
+        // })
+
+    },
     extraReducers: {
         [getAllMovies.pending]: (state) => {
             state.status = 'pending'
@@ -49,9 +60,9 @@ const moviesSlice = createSlice({
         [getAllMovies.fulfilled]: (state, action) => {
             state.status = 'fulfilled'
             state.movies = action.payload
-            state.currentPage = action.payload.currentPage
-            state.page = action.payload.page
-            // state.total_pages = action.payload.total_pages
+            // state.pages = action.payload.pages
+            // state.currentPage = action.payload.currentPage
+            // state.totalPages = action.payload
         },
         [getAllMovies.rejected]: (state, action) => {
             state.error = action.payload
@@ -75,4 +86,5 @@ const moviesSlice = createSlice({
 
 const moviesReducer = moviesSlice.reducer;
 
+export const {setCurrentPage} = moviesSlice.actions;
 export default moviesReducer;

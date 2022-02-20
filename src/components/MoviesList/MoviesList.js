@@ -4,34 +4,35 @@ import {useDispatch, useSelector} from "react-redux";
 import {getAllMovies} from "../../store";
 import {MoviesListCard} from "../MoviesListCard/MoviesListCard";
 import css from "./MovieList.module.css"
-import {useParams, useSearchParams} from "react-router-dom";
+import {setCurrentPage} from '../../store'
+import {useSearchParams} from "react-router-dom";
 
 
 const MoviesList = () => {
 
-    const {movies, status, error, currentPage, page} = useSelector(state => state.movies);
+    const {movies, status, error, page, totalPages} = useSelector(state => state.movies);
     const dispatch = useDispatch();
-    const pages = [1, 2, 3, 4, 5];
-    const [searchParams, setSearchParams] = useSearchParams();
+    const pages = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+    // const pages = totalPages;
+    // for (const page of pages) {
+    //     console.log(page)
+    // }
 
+    console.log(page)
+    console.log(totalPages)
+   
 
-    const setCurrentPage = (page) => {
-  // if (searchParams){}
-    return   currentPage === page
-
-
-    }
+    // const [searchParams,useSearchParams] = useSearchParams();
+    //
+    // useSearchParams(searchParams)
 
     useEffect(() => {
-        if (!searchParams.get('page')) {
-            setSearchParams({page: '1'})
-        }
-        const page = searchParams.get('page');
+        dispatch(getAllMovies({page}))
 
-        dispatch(getAllMovies({currentPage}))
 
-    }, [searchParams])
+    }, [page])
 
+    console.log(page)
 
 
     return (
@@ -44,9 +45,10 @@ const MoviesList = () => {
                 {/*<div className={currentPage === page ? css.CurrentPage : css.Page}> </div>*/}
                 {pages.map((page, index) =>
                     <span key={index} className={css.Page}
-                          onClick={() => setCurrentPage(page)}
+                          onClick={() => dispatch(setCurrentPage({page}))}
                     > {page}</span>)}
             </div>
+
 
 
             <div className={css.MovieListWrapper}>
@@ -57,6 +59,6 @@ const MoviesList = () => {
 
         </div>
     );
-};
+}
 
 export {MoviesList};

@@ -5,7 +5,7 @@ import {axiosService} from './axios.service';
 
 export const moviesService = {
 
-    getAll: (currentPage) => axiosService.get(`${urls.movies}?api_key=${process.env.REACT_APP_API_KEY}&page=${currentPage}`).then(value => value.data.results),
+    getAll: ({page}) => axiosService.get(`${urls.movies}?api_key=${process.env.REACT_APP_API_KEY}&page=${page}`).then(value => value.data.results),
     getById: ({id}) => axiosService.get(`${urls.movie}/${id}?api_key=${process.env.REACT_APP_API_KEY}`).then(value => value.data),
 
 }
